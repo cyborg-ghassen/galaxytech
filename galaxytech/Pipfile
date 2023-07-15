@@ -1,0 +1,34 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+djangorestframework = "*"
+django = "*"
+django-filter = "*"
+django-storages = "*"
+python-dotenv = "*"
+coreapi = "*"
+django-cors-headers = "*"
+django-import-export = "*"
+django-rest-passwordreset = "*"
+gunicorn = "*"
+django-ses = "*"
+boto3 = "*"
+djangorestframework-simplejwt = "*"
+pillow = "*"
+celery = "*"
+django-celery-beat = "*"
+channels-redis = "*"
+django-redis = "*"
+django-online-users = "*"
+pylama = "*"
+pre-commit = "*"
+django-mysql = "*"
+mysqlclient = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
