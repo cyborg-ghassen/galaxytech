@@ -1,6 +1,6 @@
 from django.urls import path
 
-from accounts.api.viewsets import SetCSRFCookie
+from .viewsets import SetCSRFCookie
 from rest_framework.routers import DefaultRouter
 
 from .viewsets import RegistrationViewSet, UserViewSet, GroupViewSet

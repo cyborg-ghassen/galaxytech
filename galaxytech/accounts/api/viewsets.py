@@ -51,7 +51,10 @@ class SetCSRFCookie(APIView):
         response = Response()
         response.set_cookie("csrftoken", csrf_token)
         print(request.COOKIES)
-        return Response({"csrftoken": request.COOKIES["csrftoken"]})
+        return Response({'detail': 'CSRF cookie set.',
+                         'csrftoken': request.COOKIES.get("csrftoken", None),
+                         'sessionid': request.COOKIES.get("sessionid", None)
+                         })
 
 
 class CustomResetPasswordRequestToken(ResetPasswordRequestToken):
