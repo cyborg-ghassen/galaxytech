@@ -20,6 +20,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('v1/account/', include(('accounts.urls', 'accounts'), namespace='accounts-views')),
     path('v1/account/', include(('accounts.api.apiurls', 'accounts'), namespace='account-views')),
+    path('v1/marketplace/', include(('marketplace.api.apiurls',
+                                     'marketplace'), namespace='marketplace-views')),
     path('v1/password_reset/', include('django_rest_passwordreset.urls',
                                        namespace='password_reset')),
 ]

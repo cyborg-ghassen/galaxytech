@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import SoftBadge from '../../../common/SoftBadge';
+import SoftBadge from '../../../components/common/SoftBadge';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CardDropdown from '../../../common/CardDropdown';
+import CardDropdown from '../../../components/common/CardDropdown';
 import { Card, Dropdown, Spinner } from 'react-bootstrap';
-import AdvanceTable from '../../../common/advance-table/AdvanceTable';
-import AdvanceTablePagination from '../../../common/advance-table/AdvanceTablePagination';
-import AdvanceTableWrapper from '../../../common/advance-table/AdvanceTableWrapper';
+import AdvanceTable from '../../../components/common/advance-table/AdvanceTable';
+import AdvanceTablePagination from '../../../components/common/advance-table/AdvanceTablePagination';
+import AdvanceTableWrapper from '../../../components/common/advance-table/AdvanceTableWrapper';
 import UsersTableHeader from './UsersTableHeader';
-import useQuery from '../../../../hooks/useQuery';
+import useQuery from '../../../hooks/useQuery';
 import { getUsers } from '../actions/Users';
-import Flex from '../../../common/Flex';
-import Avatar from '../../../common/Avatar';
-import { formatDateTime } from '../../../../helpers/utils';
+import Flex from '../../../components/common/Flex';
+import Avatar from '../../../components/common/Avatar';
+import { formatDateTime } from '../../../helpers/utils';
 
 export const Users = () => {
     const [users, setUsers] = useState([]);

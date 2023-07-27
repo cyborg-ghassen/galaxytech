@@ -1,7 +1,6 @@
 from accounts.models import User
-from django.conf import settings
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from rest_framework import serializers
 
 
@@ -60,24 +59,38 @@ class UserSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         groups = attrs.get("groups", None)
-        work_group = attrs.get("work_group", None)
+        is_marketplace = attrs.get("is_marketplace", None)
+        marketplace = attrs.get("marketplace", None)
 
         if not groups:
             raise serializers.ValidationError({"groups": "A group must be selected."})
 
-        groups = Group.objects.filter(id__in=[group.id for group in groups])
-
-        if groups.filter(name=settings.USER_GROUP_NAME).exists() and not work_group:
+        if not marketplace and is_marketplace:
             raise serializers.ValidationError(
-                {"work_group": "A work group must be selected when user group is selected."}
+                {"is_marketplace": "A marketplace must be "
+                                   "selected when the user is a marketplace user."}
             )
 
-        if groups.filter(name=settings.ADMIN_GROUP_NAME).exists():
-            attrs['work_group'] = None
-            groups = groups.exclude(name=settings.USER_GROUP_NAME)
-            attrs['groups'] = groups
+        if not marketplace:
+            attrs['is_marketplace'] = False
 
         return attrs
+
+    def create(self, validated_data):
+        groups = validated_data.pop('groups', [])
+        user_permissions = validated_data.pop('user_permissions', [])
+
+        # Create the user
+        user = User.objects.create_user(**validated_data)
+
+        # Set the many-to-many relationships after the user has been saved
+        for group in groups:
+            user.groups.add(group)
+
+        for permission in user_permissions:
+            user.user_permissions.add(permission)
+
+        return user
 
     def update(self, instance, validated_data):
         password = validated_data.pop('password', None)
@@ -89,4 +102,10 @@ class UserSerializer(serializers.ModelSerializer):
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
+        fields = "__all__"
+
+
+class PermissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Permission
         fields = "__all__"

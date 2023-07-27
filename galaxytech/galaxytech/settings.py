@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'storages',
     'django_filters',
     'utils',
-    'accounts'
+    'accounts',
+    'marketplace',
 ]
 
 MIDDLEWARE = [

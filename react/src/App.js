@@ -10,47 +10,47 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import { setCSRF } from './helpers/utils';
 
 const App = () => {
-  const HTMLClassList = document.getElementsByTagName('html')[0].classList;
-  const {
-    config: { navbarPosition }
-  } = useContext(AppContext);
+    const HTMLClassList = document.getElementsByTagName('html')[0].classList;
+    const {
+        config: { navbarPosition }
+    } = useContext(AppContext);
 
-  useEffect(() => {
-    setCSRF();
-  }, []);
+    useEffect(() => {
+        setCSRF();
+    }, []);
 
-  useEffect(() => {
-    if (is.windows()) {
-      HTMLClassList.add('windows');
-    }
-    if (is.chrome()) {
-      HTMLClassList.add('chrome');
-    }
-    if (is.firefox()) {
-      HTMLClassList.add('firefox');
-    }
-    if (is.safari()) {
-      HTMLClassList.add('safari');
-    }
-  }, [HTMLClassList]);
+    useEffect(() => {
+        if (is.windows()) {
+            HTMLClassList.add('windows');
+        }
+        if (is.chrome()) {
+            HTMLClassList.add('chrome');
+        }
+        if (is.firefox()) {
+            HTMLClassList.add('firefox');
+        }
+        if (is.safari()) {
+            HTMLClassList.add('safari');
+        }
+    }, [HTMLClassList]);
 
-  useEffect(() => {
-    if (navbarPosition === 'double-top') {
-      HTMLClassList.add('double-top-nav-layout');
-    }
-    return () => HTMLClassList.remove('double-top-nav-layout');
-  }, [navbarPosition]);
+    useEffect(() => {
+        if (navbarPosition === 'double-top') {
+            HTMLClassList.add('double-top-nav-layout');
+        }
+        return () => HTMLClassList.remove('double-top-nav-layout');
+    }, [navbarPosition]);
 
-  return (
-    <Router basename={process.env.PUBLIC_URL}>
-      <FalconRoutes />
-      <ToastContainer
-        closeButton={CloseButton}
-        icon={false}
-        position={toast.POSITION.BOTTOM_LEFT}
-      />
-    </Router>
-  );
+    return (
+        <Router basename={process.env.PUBLIC_URL}>
+            <FalconRoutes />
+            <ToastContainer
+                closeButton={CloseButton}
+                icon={false}
+                position={toast.POSITION.BOTTOM_LEFT}
+            />
+        </Router>
+    );
 };
 
 export default App;

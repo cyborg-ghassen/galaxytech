@@ -1,5 +1,5 @@
 from django.contrib.auth import login
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from django.middleware.csrf import get_token
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
@@ -10,7 +10,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import RegistrationSerializer, LoginSerializer, UserSerializer, GroupSerializer
+from .serializers import RegistrationSerializer, LoginSerializer, UserSerializer, \
+    GroupSerializer, PermissionSerializer
 from accounts.models import User
 
 from utils.permissions import ViewAdmin
@@ -82,3 +83,9 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.order_by("-id")
     permission_classes = [ViewAdmin]
     serializer_class = GroupSerializer
+
+
+class PermissionViewSet(viewsets.ModelViewSet):
+    queryset = Permission.objects.order_by("-id")
+    permission_classes = [ViewAdmin]
+    serializer_class = PermissionSerializer

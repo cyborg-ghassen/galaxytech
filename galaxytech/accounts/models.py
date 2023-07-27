@@ -2,8 +2,16 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 
+from marketplace.models import Marketplace
 
 # Create your models here.
+GENDER_OPTIONS = (
+    ('male', 'Male'),
+    ('female', 'Female'),
+    ('other', 'Other'),
+)
+
+
 class UserManager(BaseUserManager):
     def create_user(self, username, password=None, **extra_fields):
         if not username:
@@ -22,16 +30,20 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     email = models.EmailField(null=True, blank=True)
     username = models.CharField(max_length=100, unique=True)
-    first_name = models.CharField(max_length=30, null=True, blank=True)
-    last_name = models.CharField(max_length=30, null=True, blank=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    is_marketplace = models.BooleanField(default=False)
     groups = models.ManyToManyField(Group, blank=True)
     user_permissions = models.ManyToManyField(Permission, blank=True)
     number = models.CharField(max_length=100, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
     avatar = models.ImageField(upload_to="avatar", null=True, blank=True, default=None)
+    gender = models.CharField(max_length=100, null=True, blank=True, choices=GENDER_OPTIONS)
+    birth_date = models.DateField(null=True, blank=True)
+    marketplace = models.ForeignKey(Marketplace, null=True, blank=True, on_delete=models.SET_NULL)
 
     objects = UserManager()
 
